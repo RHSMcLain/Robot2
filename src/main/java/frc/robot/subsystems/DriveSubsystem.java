@@ -10,15 +10,27 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
   /** Creates a new DriveSubsystem. */
-  private final PWMTalonSRX leftMotor = new PWMTalonSRX(1);
-  private final PWMTalonSRX rightMotor = new PWMTalonSRX(2);
+  private final PWMTalonSRX rightMotor1 = new PWMTalonSRX(1);
+  private final PWMTalonSRX rightMotor2 = new PWMTalonSRX(2);
+  private final PWMTalonSRX leftMotor1 = new PWMTalonSRX(3);
+  private final PWMTalonSRX leftMotor2 = new PWMTalonSRX(4);
   
   public DriveSubsystem() {
-    leftMotor.setInverted(true);
+    leftMotor1.setInverted(true);
+    leftMotor2.setInverted(true);
   }
   public void tankDrive(double left, double right){
-    leftMotor.set(left);
-    rightMotor.set(right);
+    leftMotor1.set(left);
+    rightMotor1.set(right);
+  }
+
+  public void arcadeDrive(double y, double x){
+    double left = y + x;
+    double right = y - x;
+    leftMotor1.set(left);
+    leftMotor2.set(left);
+    rightMotor1.set(right);
+    rightMotor2.set(right);
   }
   /**
    * Example command factory method.
