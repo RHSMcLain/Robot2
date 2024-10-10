@@ -6,7 +6,11 @@ import frc.robot.subsystems.DriveSubsystem;
 
 public class TurnToAngleCommand extends PIDCommand {
     public TurnToAngleCommand(DriveSubsystem chassis, double targetAngle){
-        super(new PIDController(0.3, 0, 0), chassis::getAngle, targetAngle, output -> chassis.arcadeDrive(0,output), chassis);
+        super(new PIDController(0.3, 0, 0), chassis::getAngle, targetAngle, output -> {
+            System.out.println("Output: " + output);
+            chassis.arcadeDrive(0,output/100);
+        }, chassis);
+        
         getController().enableContinuousInput(-180,180);
         getController().setTolerance(5, 5);
 

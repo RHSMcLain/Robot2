@@ -29,14 +29,14 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // private final CommandXboxController m_driverController =
   //     new CommandXboxController(OperatorConstants.kDriverControllerPort);
-  private final Joystick controller = new Joystick(0);
+  private final Joystick controller = new Joystick(1);
   private final JoystickButton trigger = new JoystickButton(controller, 0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-    m_exampleSubsystem.setDefaultCommand(new RunCommand(() -> m_exampleSubsystem.arcadeDrive(controller.getRawAxis(1), controller.getRawAxis(0)), m_exampleSubsystem));
+    m_exampleSubsystem.setDefaultCommand(new RunCommand(() -> m_exampleSubsystem.arcadeDrive(-controller.getRawAxis(1), controller.getRawAxis(0)), m_exampleSubsystem));
   }
 
   /**
@@ -53,10 +53,7 @@ public class RobotContainer {
     // new Trigger(m_exampleSubsystem::exampleCondition)
     //     .onTrue(new ExampleCommand(m_exampleSubsystem));
     trigger.onTrue(new TurnToAngleCommand(m_exampleSubsystem, 90).withTimeout(3));
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-  }
+}
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
