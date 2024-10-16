@@ -2,11 +2,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class TurnToAngleCommand extends PIDCommand {
     public TurnToAngleCommand(DriveSubsystem chassis, double targetAngle){
-        super(new PIDController(0.3, 0, 0), chassis::getAngle, targetAngle, output -> {
+        super(new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD), chassis::getAngle, targetAngle, output -> {
             System.out.println("Output: " + output);
             chassis.arcadeDrive(0,output/100);
         }, chassis);

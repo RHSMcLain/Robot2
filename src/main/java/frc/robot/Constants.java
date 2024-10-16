@@ -21,7 +21,17 @@ public final class Constants {
     public static final int kRightMotor2Port = 2;
     public static final int kLeftMotor1Port = 3;
     public static final int kLeftMotor2Port = 4;
+
+
+
+
+
+
+
     
 
+    public static double kP = 1.0;
+    public static double kI = 0.0;
+    public static double kD = 0.3;
   }
 }

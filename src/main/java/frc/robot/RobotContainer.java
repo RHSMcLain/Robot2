@@ -5,10 +5,12 @@
 package frc.robot;
 
 
+import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.TurnToAngle1;
 import frc.robot.commands.TurnToAngleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -37,8 +39,11 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
-    configureBindings();
+    configureBindings();   
     m_exampleSubsystem.setDefaultCommand(new RunCommand(() -> m_exampleSubsystem.arcadeDrive(-controller.getRawAxis(1), controller.getRawAxis(0)), m_exampleSubsystem));
+    SmartDashboard.putNumber("kP", DriveConstants.kP);
+    SmartDashboard.putNumber("kI", DriveConstants.kI);
+    SmartDashboard.putNumber("kD", DriveConstants.kD);    
   }
 
   /**
