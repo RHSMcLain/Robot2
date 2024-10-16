@@ -9,6 +9,12 @@ public class TurnToAngleCommand extends PIDCommand {
     public TurnToAngleCommand(DriveSubsystem chassis, double targetAngle){
         super(new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD), chassis::getAngle, targetAngle, output -> {
             System.out.println("Output: " + output);
+            if (output > 0 && output < 30){
+                output = 30;
+            }
+            if (output < -0.05 && output > -30){
+                output = -30;
+            }
             chassis.arcadeDrive(0,output/100);
         }, chassis);
         
