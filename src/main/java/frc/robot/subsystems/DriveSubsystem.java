@@ -14,11 +14,18 @@ import frc.robot.Constants.DriveConstants;
 public class DriveSubsystem extends SubsystemBase {
   /** Creates a new DriveSubsystem. */
   private final WPI_TalonSRX rightMotor1 = new WPI_TalonSRX(DriveConstants.kRightMotor1Port);
+  
   private final WPI_TalonSRX rightMotor2 = new WPI_TalonSRX(DriveConstants.kRightMotor2Port);
   private final WPI_TalonSRX leftMotor1 = new WPI_TalonSRX(DriveConstants.kLeftMotor1Port);
   private final WPI_TalonSRX leftMotor2 = new WPI_TalonSRX(DriveConstants.kLeftMotor2Port);
   private AHRS navX = new AHRS(Port.kMXP);
   public DriveSubsystem() {
+    addChild("RightMotor1", rightMotor1);
+    addChild("RightMotor2", rightMotor2);
+    addChild("leftMotor1", leftMotor1);
+    addChild("leftMotor2", leftMotor2);
+    addChild("navx", navX);
+    
     rightMotor1.setInverted(true);
     rightMotor2.setInverted(true);
   }
