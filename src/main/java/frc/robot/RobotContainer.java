@@ -4,15 +4,18 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
+
+import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.TurnToAngle1;
+import frc.robot.commands.TurnToAngleCommand;
 import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -29,13 +32,20 @@ public class RobotContainer {
   // private final CommandXboxController m_driverController =
   //     new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final Joystick controller = new Joystick(0);
+  private final JoystickButton trigger = new JoystickButton(controller, 1);
+  private final JoystickButton button4 = new JoystickButton(controller, 4);
 
-
+  private final TurnToAngle1 turnCommand = new TurnToAngle1(m_exampleSubsystem);
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
     // Configure the trigger bindings
-    configureBindings();
-    m_exampleSubsystem.setDefaultCommand(new RunCommand(() -> m_exampleSubsystem.arcadeDrive(controller.getRawAxis(1), controller.getRawAxis(0)), m_exampleSubsystem));
+    configureBindings();   
+    m_exampleSubsystem.setDefaultCommand(new RunCommand(() -> m_exampleSubsystem.arcadeDrive(-controller.getRawAxis(1), controller.getRawAxis(0)), m_exampleSubsystem));
+    SmartDashboard.putNumber("kP", DriveConstants.kP);
+    SmartDashboard.putNumber("kI", DriveConstants.kI);
+    SmartDashboard.putNumber("kD", DriveConstants.kD);    
   }
 
   /**
@@ -49,12 +59,11 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+    // new Trigger(m_exampleSubsystem::exampleCondition)
+    //     .onTrue(new ExampleCommand(m_exampleSubsystem));
+    trigger.onTrue(new TurnToAngleCommand(m_exampleSubsystem, 90).withTimeout(3));
+    button4.onTrue(turnCommand.withTimeout(3));
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
   /**
