@@ -25,22 +25,25 @@ public class DriveSubsystem extends SubsystemBase {
     addChild("leftMotor1", leftMotor1);
     addChild("leftMotor2", leftMotor2);
     addChild("navx", navX);
-    
+
     rightMotor1.setInverted(true);
     rightMotor2.setInverted(true);
+    leftMotor2.follow(leftMotor1);
+    rightMotor2.follow(rightMotor1);
   }
   public void tankDrive(double left, double right){
     leftMotor1.set(left);
     rightMotor1.set(right);
+    
   }
 
   public void arcadeDrive(double y, double x){
     double left = y + x;
     double right = y - x;
     leftMotor1.set(left);
-    leftMotor2.set(left);
+    // leftMotor2.set(left);
     rightMotor1.set(right);
-    rightMotor2.set(right);
+    // rightMotor2.set(right);
     
   }
   /**
